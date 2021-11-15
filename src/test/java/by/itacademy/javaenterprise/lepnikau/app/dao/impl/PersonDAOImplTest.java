@@ -2,7 +2,6 @@ package by.itacademy.javaenterprise.lepnikau.app.dao.impl;
 
 import by.itacademy.javaenterprise.lepnikau.app.dao.PersonDAO;
 import by.itacademy.javaenterprise.lepnikau.app.entity.Person;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,20 +20,14 @@ import static org.mockito.Mockito.when;
 class PersonDAOImplTest {
 
     @Mock
-    private static EntityTransaction entityTransactionMock;
-
+    private EntityTransaction entityTransactionMock;
     @Mock
     private EntityManager entityManagerMock;
     private PersonDAO personDAO;
 
-    @BeforeAll
-    static void beforeAll() {
-        entityTransactionMock = mock(EntityTransaction.class);
-
-    }
-
     @BeforeEach
     void beforeEach() {
+        entityTransactionMock = mock(EntityTransaction.class);
         entityManagerMock = mock(EntityManager.class);
         personDAO = new PersonDAOImpl(entityManagerMock);
     }

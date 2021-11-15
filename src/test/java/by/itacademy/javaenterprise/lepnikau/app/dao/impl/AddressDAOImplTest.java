@@ -2,10 +2,10 @@ package by.itacademy.javaenterprise.lepnikau.app.dao.impl;
 
 import by.itacademy.javaenterprise.lepnikau.app.dao.AddressDAO;
 import by.itacademy.javaenterprise.lepnikau.app.entity.Address;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -18,21 +18,16 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class AddressDAOImplTest {
 
-    private static EntityTransaction entityTransactionMock;
-
+    @Mock
+    private EntityTransaction entityTransactionMock;
+    @Mock
     private EntityManager entityManagerMock;
     private AddressDAO addressDAO;
 
-    @BeforeAll
-    static void beforeAll() {
-        entityTransactionMock = mock(EntityTransaction.class);
-
-    }
-
     @BeforeEach
     void beforeEach() {
+        entityTransactionMock = mock(EntityTransaction.class);
         entityManagerMock = mock(EntityManager.class);
-
         addressDAO = new AddressDAOImpl(entityManagerMock);
     }
 
