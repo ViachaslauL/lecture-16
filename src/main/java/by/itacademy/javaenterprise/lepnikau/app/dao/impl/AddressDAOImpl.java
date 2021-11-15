@@ -26,6 +26,7 @@ public class AddressDAOImpl implements AddressDAO {
             return address;
         } catch (Exception e) {
             logger.error(e.getMessage());
+            eManager.getTransaction().rollback();
         } finally {
             eManager.close();
         }
@@ -42,6 +43,7 @@ public class AddressDAOImpl implements AddressDAO {
             eManager.getTransaction().commit();
         } catch (Exception e) {
             logger.error(e.getMessage());
+            eManager.getTransaction().rollback();
         } finally {
             eManager.close();
         }

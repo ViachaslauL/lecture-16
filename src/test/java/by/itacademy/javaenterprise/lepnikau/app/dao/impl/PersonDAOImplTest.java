@@ -77,7 +77,7 @@ class PersonDAOImplTest {
     @Test
     void findTestWithWrongId() {
         Long queryId = -1L;
-
+        when(entityManagerMock.getTransaction()).thenReturn(entityTransactionMock);
         assertNull(personDAO.find(queryId));
     }
 }

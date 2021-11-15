@@ -49,10 +49,10 @@ class AddressDAOImplTest {
 
     @Test
     void saveTestWithEntityNull() {
-        assertNull(addressDAO.save(null));
 
         when(entityManagerMock.getTransaction()).thenReturn(entityTransactionMock);
 
+        assertNull(addressDAO.save(null));
         assertDoesNotThrow(() -> addressDAO.save(null));
     }
 
@@ -73,6 +73,8 @@ class AddressDAOImplTest {
     @Test
     void findTestWithWrongId() {
         Long queryId = -1L;
+
+        when(entityManagerMock.getTransaction()).thenReturn(entityTransactionMock);
 
         assertNull(addressDAO.find(queryId));
     }

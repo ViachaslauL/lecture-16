@@ -27,6 +27,7 @@ public class PersonDAOImpl implements PersonDAO {
             return person;
         } catch (Exception e) {
             logger.error(e.getMessage());
+            eManager.getTransaction().rollback();
         } finally {
             eManager.close();
         }
@@ -43,6 +44,7 @@ public class PersonDAOImpl implements PersonDAO {
             eManager.getTransaction().commit();
         } catch (Exception e) {
             logger.error(e.getMessage());
+            eManager.getTransaction().rollback();
         } finally {
             eManager.close();
         }
