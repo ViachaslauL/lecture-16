@@ -16,7 +16,8 @@ import java.io.Serializable;
 public class Address implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "address_id")
+    private Long addressId;
 
     @Column(name = "street")
     private String street;
@@ -27,7 +28,14 @@ public class Address implements Serializable {
     @Column(name = "flat_number")
     private Integer flatNumber;
 
-    @OneToOne(mappedBy = "address", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "address",
+            fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            })
     private Person person;
 
 }

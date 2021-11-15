@@ -11,10 +11,12 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "persons")
 public class Person implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "person_id")
+    private Long personId;
 
     @Column(name = "name")
     private String name;
@@ -25,8 +27,8 @@ public class Person implements Serializable {
     @Column(name = "patronymic")
     private String patronymic;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
     private Address address;
 
 }
