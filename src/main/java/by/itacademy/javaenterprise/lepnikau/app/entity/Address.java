@@ -27,15 +27,5 @@ public class Address implements Serializable {
 
     @Column(name = "flat_number")
     private Integer flatNumber;
-
-    @OneToOne(mappedBy = "address",
-            fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH
-            })
-    private Person person;
-
 }
+
