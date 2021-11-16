@@ -2,7 +2,6 @@ package by.itacademy.javaenterprise.lepnikau.app.dao.impl;
 
 import by.itacademy.javaenterprise.lepnikau.app.dao.PersonDAO;
 import by.itacademy.javaenterprise.lepnikau.app.entity.Person;
-import by.itacademy.javaenterprise.lepnikau.app.hibernate.HibernateUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
