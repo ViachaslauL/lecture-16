@@ -1,18 +1,17 @@
-package by.itacademy.javaenterprise.lepnikau.app.entity;
+package by.itacademy.javaenterprise.lepnikau.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "persons")
-public class Person implements Serializable {
+public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "person_id")
@@ -26,9 +25,4 @@ public class Person implements Serializable {
 
     @Column(name = "patronymic")
     private String patronymic;
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id")
-    private Address address;
-
 }

@@ -1,7 +1,7 @@
-package by.itacademy.javaenterprise.lepnikau.app.dao.impl;
+package by.itacademy.javaenterprise.lepnikau.dao.impl;
 
-import by.itacademy.javaenterprise.lepnikau.app.dao.AddressDAO;
-import by.itacademy.javaenterprise.lepnikau.app.entity.Address;
+import by.itacademy.javaenterprise.lepnikau.dao.AddressDAO;
+import by.itacademy.javaenterprise.lepnikau.entity.Address;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,8 +26,6 @@ class AddressDAOImplTest {
 
     @BeforeEach
     void beforeEach() {
-        entityTransactionMock = mock(EntityTransaction.class);
-        entityManagerMock = mock(EntityManager.class);
         addressDAO = new AddressDAOImpl(entityManagerMock);
     }
 
@@ -39,28 +37,32 @@ class AddressDAOImplTest {
 
         Address actual = addressDAO.save(address);
 
+        verify(entityManagerMock, times(1)).persist(address);
+
         assertNotNull(actual);
+
+        assertEquals(address, actual);
     }
 
     @Test
     void saveTestWithEntityNull() {
 
-        when(entityManagerMock.getTransaction()).thenReturn(entityTransactionMock);
-
-        assertNull(addressDAO.save(null));
-        assertDoesNotThrow(() -> addressDAO.save(null));
+        assertThrows(IllegalArgumentException.class, () -> {
+            addressDAO.save(null);
+        });
     }
 
     @Test
     void findTest() {
-        Address address = new Address();
-        address.setAddressId(1L);
-
         Long queryId = 1L;
+        Address address = new Address();
+        address.setAddressId(queryId);
 
-        when(entityManagerMock.getTransaction()).thenReturn(entityTransactionMock);
-        when(entityManagerMock.find(Mockito.<Class<Address>>any(), Mockito.eq(queryId)))
-                .thenReturn(address);
+        Class<Address> anyObject = Mockito.any();
+
+        Long eqValue = Mockito.eq(queryId);
+
+        when(entityManagerMock.find(anyObject, eqValue)).thenReturn(address);
 
         assertEquals(queryId, addressDAO.find(queryId).getAddressId());
     }
@@ -68,8 +70,6 @@ class AddressDAOImplTest {
     @Test
     void findTestWithWrongId() {
         Long queryId = -1L;
-
-        when(entityManagerMock.getTransaction()).thenReturn(entityTransactionMock);
 
         assertNull(addressDAO.find(queryId));
     }

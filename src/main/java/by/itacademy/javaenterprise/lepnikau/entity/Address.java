@@ -1,4 +1,4 @@
-package by.itacademy.javaenterprise.lepnikau.app.entity;
+package by.itacademy.javaenterprise.lepnikau.entity;
 
 
 import lombok.AllArgsConstructor;
@@ -6,14 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "addresses")
-public class Address implements Serializable {
+public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_id")
@@ -27,5 +26,9 @@ public class Address implements Serializable {
 
     @Column(name = "flat_number")
     private Integer flatNumber;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "person_id")
+    private Person personId;
 }
 

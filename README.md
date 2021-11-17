@@ -21,7 +21,7 @@
 <li>docker-compose
 <li>Flyway
 <li>Hibernate
-<li>Slf4j+Log4j
+<li>Slf4j+logback
 <li>Lombok
 <li>jUnit-jupiter
 <li>Mockito
@@ -30,7 +30,7 @@
 <p>In order to build and run the application, follow these steps. 
 In the console, go to the project directory and type:</p>
 <ol>
-<li>mvn clean install
+<li>mvn clean package
 <li>docker-compose up -d
 <li>mvn flyway:migrate
 </ol>

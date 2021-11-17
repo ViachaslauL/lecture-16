@@ -1,7 +1,7 @@
-package by.itacademy.javaenterprise.lepnikau.app.dao.impl;
+package by.itacademy.javaenterprise.lepnikau.dao.impl;
 
-import by.itacademy.javaenterprise.lepnikau.app.dao.PersonDAO;
-import by.itacademy.javaenterprise.lepnikau.app.entity.Person;
+import by.itacademy.javaenterprise.lepnikau.dao.PersonDAO;
+import by.itacademy.javaenterprise.lepnikau.entity.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,8 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PersonDAOImplTest {
@@ -27,8 +26,6 @@ class PersonDAOImplTest {
 
     @BeforeEach
     void beforeEach() {
-        entityTransactionMock = mock(EntityTransaction.class);
-        entityManagerMock = mock(EntityManager.class);
         personDAO = new PersonDAOImpl(entityManagerMock);
     }
 
@@ -40,29 +37,33 @@ class PersonDAOImplTest {
 
         Person actual = personDAO.save(person);
 
+        verify(entityManagerMock, times(1)).persist(person);
+
         assertNotNull(actual);
+
+        assertEquals(person, actual);
     }
 
     @Test
     void saveTestWithEntityEqualToNull() {
 
-        when(entityManagerMock.getTransaction()).thenReturn(entityTransactionMock);
+        assertThrows(IllegalArgumentException.class, () -> {
+            personDAO.save(null);
+        });
 
-        Person actual = personDAO.save(null);
-
-        assertNull(actual);
     }
 
     @Test
     void findTest() {
-        Person person = new Person();
-        person.setPersonId(5L);
-
         Long queryId = 5L;
+        Person person = new Person();
+        person.setPersonId(queryId);
 
-        when(entityManagerMock.getTransaction()).thenReturn(entityTransactionMock);
-        when(entityManagerMock.find(Mockito.<Class<Person>>any(), Mockito.eq(queryId)))
-                .thenReturn(person);
+        Class<Person> anyObject = Mockito.any();
+
+        Long eqValue = Mockito.eq(queryId);
+
+        when(entityManagerMock.find(anyObject, eqValue)).thenReturn(person);
 
         assertEquals(queryId, personDAO.find(queryId).getPersonId());
     }
@@ -70,7 +71,7 @@ class PersonDAOImplTest {
     @Test
     void findTestWithWrongId() {
         Long queryId = -1L;
-        when(entityManagerMock.getTransaction()).thenReturn(entityTransactionMock);
+
         assertNull(personDAO.find(queryId));
     }
 }
