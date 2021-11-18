@@ -40,7 +40,6 @@ public class PersonDAOImpl implements PersonDAO {
             person = entityManager.find(Person.class, id);
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
-            entityManager.getTransaction().rollback();
         }
         return person;
     }

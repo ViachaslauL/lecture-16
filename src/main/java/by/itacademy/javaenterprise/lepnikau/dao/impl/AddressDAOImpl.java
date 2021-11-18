@@ -40,7 +40,6 @@ public class AddressDAOImpl implements AddressDAO {
             address = entityManager.find(Address.class, id);
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
-            entityManager.getTransaction().rollback();
         }
         return address;
     }
